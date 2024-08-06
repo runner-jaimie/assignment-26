@@ -2,32 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+/* 모든 링크들의 기본 값을 여기에 집어 넣은 것이다. */
+@layer base {
+  a {
+    @apply text-gray-500;
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+/* 새로운 utility를 만듬  우리의 application 모든 곳에서 사용할 수 있는 새로운 클래스 */
+@layer utilities {
+  .text-bigger-hello {
+    @apply text-3xl font-semibold;
+  }
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+/* 새로운 component를 만듬 이건 버튼을 형성하기 위해 class들을 다같이 추상화 하는 컴포넌트 */
+@layer components {
+  .primary-btn {
+    @apply w-96 bg-gray-200 text-black  font-medium  rounded-full text-center hover:bg-gray-500 transition-colors;
   }
 }

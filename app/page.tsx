@@ -1,7 +1,5 @@
 "use client";
 import {
-  ChatBubbleBottomCenterTextIcon,
-  ChatBubbleLeftEllipsisIcon,
   EnvelopeIcon,
   UserIcon,
   KeyIcon,
@@ -11,7 +9,7 @@ import {
 import FormInput from "./components/form-input";
 import FormButton from "./components/form-btn";
 import { useFormState } from "react-dom";
-import { handleForm } from "./action";
+import { handleForm, FormState } from "./action";
 
 interface MessasgeProps {
   message: string;
@@ -26,8 +24,12 @@ const ErrorMessage = ({ message }: MessasgeProps) => (
   <div className="w-96 text-red-500">{message}</div>
 );
 
+const initialState: FormState = {
+  success: false,
+};
+
 export default function Login() {
-  const [state, action] = useFormState(handleForm, null);
+  const [state, action] = useFormState(handleForm, initialState);
   //const { pending } = useFormStatus();
   // 이 hook은 form의 자식 요소에서만 사용되어야 한다.
 
@@ -37,14 +39,14 @@ export default function Login() {
         <FireIcon className="h-10 w-10 text-red-400" />
       </div>
       <form action={action} className="flex flex-col items-center gap-3">
-        <div className="relative">
+        <div className="relative w-96">
           <EnvelopeIcon className=" absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500" />
           <FormInput
             name="email"
             type="email"
             placeholder="Email"
             required
-            errors={[]}
+            errors={state?.fieldErrors?.email ?? []}
           />
         </div>
         <div className="relative">
@@ -54,7 +56,7 @@ export default function Login() {
             type="text"
             placeholder="Username"
             required
-            errors={[]}
+            errors={state?.fieldErrors?.username}
           />
         </div>
         <div className="relative">
@@ -64,13 +66,13 @@ export default function Login() {
             type="password"
             placeholder="Password"
             required
-            errors={[]}
-            hasError={state?.errors && state.errors.length > 0}
+            errors={state?.fieldErrors?.password}
+            //hasError={state?.errors && state.errors.length > 0}
           />
         </div>
-        {state?.errors && <ErrorMessage message={state.errors[0]} />}
+        {/* {state?.errors && <ErrorMessage message={state.errors[0]} />} */}
         {state?.success && <SuccessMessage message={state.message || ""} />}
-        <FormButton text="Log in " />
+        {!state.success && <FormButton text="Log in" />}
       </form>
     </div>
   );

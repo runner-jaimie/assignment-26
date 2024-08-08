@@ -6,8 +6,8 @@ import {
   FireIcon,
 } from "@heroicons/react/24/solid";
 
-import FormInput from "./components/form-input";
-import FormButton from "./components/form-btn";
+import FormInput from "../components/form-input";
+import FormButton from "../components/form-btn";
 import { useFormState } from "react-dom";
 import { handleForm, FormState } from "./action";
 
@@ -39,7 +39,7 @@ export default function Login() {
         <FireIcon className="h-10 w-10 text-red-400" />
       </div>
       <form action={action} className="flex flex-col items-center gap-3">
-        <div className="relative w-96">
+        <div className="relative">
           <EnvelopeIcon className=" absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500" />
           <FormInput
             name="email"

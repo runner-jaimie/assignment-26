@@ -1,10 +1,15 @@
 "use client";
-import { EnvelopeIcon, KeyIcon, FireIcon } from "@heroicons/react/24/solid";
+import {
+  EnvelopeIcon,
+  UserIcon,
+  KeyIcon,
+  FireIcon,
+} from "@heroicons/react/24/solid";
 
-import Input from "../components/input";
-import Button from "../components/button";
+import Input from "../../components/input";
+import Button from "../../components/button";
 import { useFormState } from "react-dom";
-import { FormState, logIn } from "./action";
+import { createAccout } from "./action";
 import Link from "next/link";
 
 interface MessasgeProps {
@@ -20,12 +25,8 @@ const ErrorMessage = ({ message }: MessasgeProps) => (
   <div className="w-96 text-red-500">{message}</div>
 );
 
-const initialState: FormState = {
-  success: false,
-};
-
 export default function Login() {
-  const [state, action] = useFormState(logIn, initialState);
+  const [state, action] = useFormState(createAccout, null);
   //const { pending } = useFormStatus();
   // 이 hook은 form의 자식 요소에서만 사용되어야 한다.
 
@@ -46,6 +47,16 @@ export default function Login() {
           />
         </div>
         <div className="relative">
+          <UserIcon className="absolute left-3 top-[10px] h-5 w-5 text-gray-400 pointer-events-none" />
+          <Input
+            name="username"
+            type="text"
+            placeholder="Username"
+            required
+            errors={state?.fieldErrors?.username}
+          />
+        </div>
+        <div className="relative">
           <KeyIcon className="absolute left-3 top-[10px] h-5 w-5 text-gray-400 pointer-events-none" />
           <Input
             name="password"
@@ -53,13 +64,20 @@ export default function Login() {
             placeholder="Password"
             required
             errors={state?.fieldErrors?.password}
+            //hasError={state?.errors && state.errors.length > 0}
           />
         </div>
-        {state?.success && <SuccessMessage message={state.message || ""} />}
-        {!state.success && <Button text="Log in" />}
-        <Link href="/create-account">
-          <Button text="Create Account" />
-        </Link>
+        <div className="relative">
+          <KeyIcon className="absolute left-3 top-[10px] h-5 w-5 text-gray-400 pointer-events-none" />
+          <Input
+            name="confirm_password"
+            type="password"
+            placeholder="Confirm Password"
+            required
+            errors={state?.fieldErrors?.password}
+          />
+        </div>
+        <Button text="Create Account" />
       </form>
     </div>
   );

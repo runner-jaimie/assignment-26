@@ -1,4 +1,4 @@
-interface FormInputProps {
+interface InputProps {
   type: string;
   placeholder: string;
   required: boolean;
@@ -7,13 +7,13 @@ interface FormInputProps {
   hasError?: boolean;
 }
 
-export default function FormInput({
+export default function Input({
   type,
   placeholder,
   required,
   errors = [],
   name,
-}: FormInputProps) {
+}: InputProps) {
   return (
     <div className="flex flex-col gap-3">
       <input
@@ -24,7 +24,13 @@ export default function FormInput({
         placeholder={placeholder}
         required={required}
       />
-      <span className="text-red-500 font-medium w-96 ">{errors}</span>
+      {errors.length > 0 && (
+        <div className="text-red-500 font-medium w-96">
+          {errors.map((error, index) => (
+            <p key={index}>{error}</p>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

@@ -6,6 +6,7 @@ import Button from "../components/button";
 import { useFormState } from "react-dom";
 import { FormState, logIn } from "./action";
 import Link from "next/link";
+import AddTweet from "../components/add-tweet";
 
 interface MessasgeProps {
   message: string;
@@ -31,6 +32,7 @@ export default function Login() {
 
   return (
     <div className="flex flex-col gap-10 py-8 px-6">
+      <AddTweet />
       <div className="flex flex-col gap-2 *:font-medium items-center">
         <FireIcon className="h-10 w-10 text-red-400" />
       </div>

@@ -3,6 +3,7 @@ import { useFormStatus } from "react-dom";
 
 interface ButtonProps {
   text: string;
+  disabled?: boolean;
 }
 export default function Button({ text }: ButtonProps) {
   const { pending } = useFormStatus();
